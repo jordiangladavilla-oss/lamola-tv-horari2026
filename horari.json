@@ -1,0 +1,420 @@
+{
+  "_comment": "Horari setmanal de CrossFit La Mola. Edita aquest fitxer (o fes servir admin.html) per canviar les classes.",
+  "_fields": {
+    "days": "array amb els 7 dies de la setmana",
+    "name": "nom del dia (Dilluns, Dimarts, etc.)",
+    "abbr": "abreviatura del dia (Dl, Dm, etc.)",
+    "slots": "array de franges horaries",
+    "time": "franja horaria (ex: '07:00-08:00')",
+    "classes": "array de classes en aquesta franja",
+    "disc": "codi de disciplina (wod, wl, hy, st, bw, ab, pr, rc, etc, open)",
+    "label": "nom de la classe tal com apareix"
+  },
+  "openHours": {
+    "weekdays": {"open": "07:00", "close": "21:30"},
+    "saturday": {"open": "09:30", "close": "11:30"},
+    "sunday": {"open": "09:30", "close": "11:30"}
+  },
+  "disciplines": [
+    {"code": "wod", "name": "WOD", "color": "var(--bone-ink)"},
+    {"code": "wl", "name": "Weightlifting", "color": "var(--accent-ink)"},
+    {"code": "hy", "name": "Hybrid Club", "color": "#3d5f3f"},
+    {"code": "st", "name": "Strength", "color": "#8c3f2f"},
+    {"code": "bw", "name": "Bodyweight", "color": "#5a4a2f"},
+    {"code": "ab", "name": "Abs & Cals", "color": "#7a4a3a"},
+    {"code": "pr", "name": "The Program", "color": "var(--accent-ink)"},
+    {"code": "rc", "name": "Running Club", "color": "#3a5a7a"},
+    {"code": "etc", "name": "Entrena amb coach", "color": "var(--muted-ink)"},
+    {"code": "open", "name": "Open Gym", "color": "var(--muted-ink)"}
+  ],
+  "days": [
+    {
+      "name": "Dilluns",
+      "abbr": "Dl",
+      "slots": [
+        {"time": "07:00-08:00", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "08:00-09:00", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "09:30-10:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "10:30-11:30", "classes": [
+          {"disc": "hy", "label": "Hybrid Club"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "11:30-12:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "12:30-13:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "13:30-14:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "14:30-15:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "15:30-16:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "16:30-17:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "17:30-18:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "18:30-19:30", "classes": [
+          {"disc": "hy", "label": "Hybrid Club"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "18:30-20:30", "classes": [
+          {"disc": "pr", "label": "The Program"}
+        ]},
+        {"time": "19:30-20:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "20:30-21:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]}
+      ]
+    },
+    {
+      "name": "Dimarts",
+      "abbr": "Dm",
+      "slots": [
+        {"time": "07:00-08:00", "classes": [
+          {"disc": "st", "label": "Strength Club - Powerlifting"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "08:00-09:00", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "09:30-10:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "10:30-11:30", "classes": [
+          {"disc": "hy", "label": "Hybrid Club"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "11:30-12:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "12:30-13:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "13:30-14:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "14:30-15:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "15:30-16:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "16:00-17:30", "classes": [
+          {"disc": "etc", "label": "Entrena amb el coach"}
+        ]},
+        {"time": "16:30-17:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "17:30-18:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "bw", "label": "Bodyweight Lab - Advance"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "18:30-19:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "19:30-20:30", "classes": [
+          {"disc": "hy", "label": "Hybrid Club"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "20:30-21:30", "classes": [
+          {"disc": "st", "label": "Strength Club - Powerlifting"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]}
+      ]
+    },
+    {
+      "name": "Dimecres",
+      "abbr": "Dc",
+      "slots": [
+        {"time": "07:00-08:00", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "08:00-09:00", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "09:30-10:30", "classes": [
+          {"disc": "wl", "label": "La Mola Weightlifting"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "10:30-11:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "11:30-12:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "12:30-13:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "13:30-14:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "14:30-15:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "15:30-16:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "16:00-17:30", "classes": [
+          {"disc": "etc", "label": "Entrena amb el coach"}
+        ]},
+        {"time": "16:30-17:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "17:30-18:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "wl", "label": "La Mola Weightlifting"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "18:30-19:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "bw", "label": "Bodyweight Lab - Base"},
+          {"disc": "rc", "label": "Running Club"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "18:30-20:30", "classes": [
+          {"disc": "pr", "label": "The Program"}
+        ]},
+        {"time": "19:30-20:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "ab", "label": "Abs & Cals"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "20:30-21:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]}
+      ]
+    },
+    {
+      "name": "Dijous",
+      "abbr": "Dj",
+      "slots": [
+        {"time": "07:00-08:00", "classes": [
+          {"disc": "hy", "label": "Hybrid Club"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "08:00-09:00", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "09:30-10:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "10:30-11:30", "classes": [
+          {"disc": "ab", "label": "Abs & Cals"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "11:30-12:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "12:30-13:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "13:30-14:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "14:30-15:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "15:30-16:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "16:00-17:30", "classes": [
+          {"disc": "etc", "label": "Entrena amb el coach"}
+        ]},
+        {"time": "16:30-17:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "17:30-18:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "18:30-19:30", "classes": [
+          {"disc": "hy", "label": "Hybrid Club"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "19:30-20:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "20:30-21:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]}
+      ]
+    },
+    {
+      "name": "Divendres",
+      "abbr": "Dv",
+      "slots": [
+        {"time": "07:00-08:00", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "08:00-09:00", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "09:30-10:30", "classes": [
+          {"disc": "st", "label": "Strength Club - Powerlifting"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "10:30-11:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "11:30-12:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "12:30-13:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "13:30-14:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "14:30-15:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "15:30-16:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "16:30-17:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "17:30-18:30", "classes": [
+          {"disc": "st", "label": "Strength Club - Powerlifting"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "18:30-19:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "18:30-20:30", "classes": [
+          {"disc": "pr", "label": "The Program"}
+        ]},
+        {"time": "19:30-20:30", "classes": [
+          {"disc": "wod", "label": "WOD"},
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]}
+      ]
+    },
+    {
+      "name": "Dissabte",
+      "abbr": "Ds",
+      "slots": [
+        {"time": "09:30-10:30", "classes": [
+          {"disc": "wod", "label": "WOD in Pairs"},
+          {"disc": "open", "label": "Open Gym"}
+        ]},
+        {"time": "10:30-11:30", "classes": [
+          {"disc": "wod", "label": "WOD in Pairs"},
+          {"disc": "open", "label": "Open Gym"}
+        ]}
+      ]
+    },
+    {
+      "name": "Diumenge",
+      "abbr": "Dg",
+      "slots": [
+        {"time": "09:30-10:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]},
+        {"time": "10:30-11:30", "classes": [
+          {"disc": "open", "label": "Open Gym"},
+          {"disc": "open", "label": "Open Exterior"}
+        ]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<title>Admin Horari · CrossFit La Mola</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#17140F;
+  --ink-2:#2A251D;
+  --bone:#F4EEDF;
+  --bone-2:#E8E2D2;
+  --bone-3:#D4CCB8;
+  --bone-ink:#17140F;
+  --muted-ink:#6B6455;
+  --accent:#C85E2E;
+  --accent-hi:#E87C4A;
+  --accent-ink:#B84D1E;
+  --ok:#3E6B4F;
+  --err:#B8342C;
+  --wod-c:var(--bone-ink);
+  --wl-c:var(--accent-ink);
+  --hy-c:#3d5f3f;
+  --st-c:#8c3f2f;
+  --bw-c:#5a4a2f;
+  --ab-c:#7a4a3a;
+  --pr-c:var(--accent-ink);
+  --rc-c:#3a5a7a;
+  --etc-c:var(--muted-ink);
+  --open-c:var(--muted-ink);
+  --f-display:'Fraunces',serif;
+  --f-serif:'Fraunces',serif;
+  --f-sans:'Inter',-apple-system,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bone);color:var(--ink);font-family:var(--f-sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;padding:0 0 120px}
+
+.top{background:var(--ink);color:var(--bone);padding:24px 48px;display:flex;align-items:center;gap:32px;position:sticky;top:0;z-index:50;border-bottom:1px solid var(--ink-2)}
+.top .brand{font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.01em}
+.top .brand em{font-style:italic;color:var(--accent-hi)}
+.top .sub{font-family:var(--f-mono);font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--bone-3)}
+.top .spacer{flex:1}
+.top .counts{font-family:var(--f-mono);font-size:12px;color:var(--bone-3);letter-spacing:.1em}
+.top .counts b{color:var(--bone);font-weight:500}
+.top a.link{color:var(--bone-3);text-decoration:none;font-size:13px;padding:8px 14px;border:1px solid var(--ink-2);border-radius:6px;transition:all .15s}
+.top a.link:hover{color:var(--bone);border-color:var(--bone-3)}
+
+.hero{padding:56px 48px 32px;border-bottom:1px solid var(--bone-3)}
+.hero h1{font-family:var(--f-display);font-weight:700;font-size:64px;line-height:1;letter-spacing:-.03em;margin-bottom:16px}
+.hero h1 em{font-style:italic;color:var(--accent-ink)}
+.hero .lede{font-family:var(--f-serif);font-style:italic;font-size:20px;color:var(--muted-ink);max-width:60ch}
+
+.toolbar{padding:24px 48px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;background:var(--bone);position:sticky;top:79px;z-index:40;border-bottom:1px solid var(--bone-3)}
+.btn{font-family:var(--f-sans);font-weight:500;font-size:14px;padding:12px 20px;border:1px solid var(--ink);background:var(--bone);color:var(--ink);border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .15s;line-height:1}
+.btn:hover{background:var(--ink);color:var(--bone)}
+.btn.primary{background:var(--ink);color:var(--bone)}
+.btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+.btn.ghost{border-color:var(--bone-3);color:var(--muted-ink)}
+.btn.ghost:hover{border-color:var(--ink);background:transparent;color:var(--ink)}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:var(--bone)}
+.btn svg{width:16px;height:16px;flex-shrink:0}
+
+.status{padding:12px 48px;font-size:13px;color:var(--muted-ink);background:var(--bone-2);display:none;border-bottom:1px solid var(--bone-3)}
+.status.on{display:block}
+.status.ok{color:var(--ok);background:#E8EFE4}
+.status.err{color:var(--err);background:#F4E0DE}
+
+.schedule{padding:32px 48px;max-width:1600px}
+.day-row{margin-bottom:32px;border:1px solid var(--bone-3);border-radius:12px;overflow:hidden;background:var(--bone)}
+.day-head{padding:16px 24px;background:var(--ink);color:var(--bone);display:flex;align-items:center;gap:20px;cursor:pointer}
+.day-head:hover{background:var(--ink-2)}
+.day-head h3{font-family:var(--f-display);font-weight:600;font-size:24px;letter-spacing:-.01em}
+.day-head .abbr{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-3);margin-left:8px}
+.day-head .count{margin-left:auto;font-family:var(--f-mono);font-size:12px;color:var(--bone-3)}
+.day-head .chev{color:var(--bone-3);transition:transform .2s}
+.day-row.open .day-head .chev{transform:rotate(180deg)}
+
+.day-body{display:none;padding:20px 24px}
+.day-row.open .day-body{display:block}
+
+.slot-card{border:1px solid var(--bone-3);border-radius:8px;margin-bottom:12px;background:var(--bone);overflow:hidden}
+.slot-head{padding:12px 16px;display:flex;align-items:center;gap:16px;background:var(--bone-2);cursor:pointer}
+.slot-head:hover{background:var(--bone-3)}
+.slot-head .time{font-family:var(--f-mono);font-weight:500;font-size:14px;min-width:100px}
+.slot-head .classes-preview{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.slot-head .class-tag{font-size:11px;padding:4px 8px;border-radius:4px;font-family:var(--f-mono);letter-spacing:.1em;text-transform:uppercase}
+.slot-head .class-tag.open{opacity:.5}
+.slot-head .slot-actions{display:flex;gap:6px}
+.slot-head .slot-actions button{padding:4px 10px;font-size:11px;border:1px solid var(--bone-3);background:transparent;color:var(--muted-ink);border-radius:4px;cursor:pointer;font-family:var(--f-mono)}
+.slot-head .slot-actions button:hover{border-color:var(--ink);color:var(--ink)}
+.slot-head .slot-actions button.del:hover{border-color:var(--err);color:var(--err)}
+
+.slot-body{display:none;padding:16px;border-top:1px solid var(--bone-3)}
+.slot-card.editing .slot-body{display:block}
+
+.class-row{display:grid;grid-template-columns:120px 1fr auto;gap:12px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--bone-3)}
+.class-row:last-child{border-bottom:none}
+.class-row select{padding:8px 12px;border:1px solid var(--bone-3);border-radius:6px;font-family:var(--f-sans);font-size:13px;background:var(--bone)}
+.class-row input{padding:8px 12px;border:1px solid var(--bone-3);border-radius:6px;font-family:var(--f-sans);font-size:13px;flex:1}
+.class-row button{padding:6px 12px;border:1px solid var(--bone-3);background:transparent;color:var(--muted-ink);border-radius:4px;cursor:pointer}
+.class-row button:hover{border-color:var(--err);color:var(--err)}
+
+.add-class-btn{margin-top:12px;font-size:12px;padding:8px 14px}
+.slot-form-row{display:grid;grid-template-columns:100px 1fr;gap:12px;margin-bottom:12px}
+.slot-form-row label{font-family:var(--f-mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted-ink);padding-top:10px}
+.slot-form-row input{padding:10px 14px;border:1px solid var(--bone-3);border-radius:6px;font-family:var(--f-mono);font-size:14px}
+
+.add-slot-btn{margin-top:16px}
+
+.legend{padding:24px 48px;display:flex;flex-wrap:wrap;gap:16px 32px;border-top:1px solid var(--bone-3);font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-ink);align-items:center}
+.legend .chip{display:inline-flex;align-items:center;gap:8px}
+.legend .chip::before{content:"";width:12px;height:12px;border-radius:3px}
+.legend .chip.wod::before{background:var(--wod-c)}
+.legend .chip.wl::before{background:var(--wl-c)}
+.legend .chip.hy::before{background:var(--hy-c)}
+.legend .chip.st::before{background:var(--st-c)}
+.legend .chip.bw::before{background:var(--bw-c)}
+.legend .chip.ab::before{background:var(--ab-c)}
+.legend .chip.pr::before{background:var(--pr-c)}
+.legend .chip.rc::before{background:var(--rc-c)}
+.legend .chip.etc::before{background:var(--etc-c)}
+.legend .chip.open::before{background:var(--open-c);opacity:.5}
+
+.modal-back{position:fixed;inset:0;background:rgba(23,20,15,.7);z-index:100;display:none;align-items:center;justify-content:center;padding:40px}
+.modal-back.on{display:flex}
+.modal{background:var(--bone);border-radius:16px;max-width:560px;width:100%;padding:36px;max-height:90vh;overflow-y:auto}
+.modal h2{font-family:var(--f-display);font-weight:700;font-size:28px;margin-bottom:8px;letter-spacing:-.02em}
+.modal h2 em{font-style:italic;color:var(--accent-ink)}
+.modal p{color:var(--muted-ink);margin-bottom:24px;font-size:14px}
+.modal label{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted-ink);margin-bottom:6px;margin-top:16px}
+.modal input[type=text],.modal input[type=password]{width:100%;font-family:var(--f-mono);font-size:13px;padding:12px 14px;border:1px solid var(--bone-3);border-radius:6px;background:var(--bone)}
+.modal input:focus{outline:none;border-color:var(--ink)}
+.modal .hint{font-size:12px;color:var(--muted-ink);font-style:italic;margin-top:6px;font-family:var(--f-serif)}
+.modal .hint a{color:var(--accent-ink)}
+.modal-actions{display:flex;gap:10px;margin-top:28px;justify-content:flex-end}
+details summary{cursor:pointer;color:var(--muted-ink);font-size:13px;margin-top:8px;user-select:none}
+details summary:hover{color:var(--ink)}
+details[open] summary{color:var(--ink);margin-bottom:8px}
+
+@media (max-width:900px){
+  .top{padding:16px 20px;flex-wrap:wrap;gap:12px}
+  .top .brand{font-size:18px}
+  .top .counts{display:none}
+  .hero{padding:32px 20px 24px}
+  .hero h1{font-size:40px}
+  .hero .lede{font-size:16px}
+  .toolbar{padding:16px 20px;top:auto;position:static}
+  .schedule{padding:16px 20px}
+  .day-head{padding:12px 16px}
+  .day-head h3{font-size:18px}
+  .day-body{padding:12px 16px}
+  .slot-head{flex-wrap:wrap;gap:8px}
+  .slot-head .time{min-width:auto}
+  .class-row{grid-template-columns:1fr;gap:8px}
+  .slot-form-row{grid-template-columns:1fr}
+  .legend{padding:16px 20px}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div>
+    <div class="brand">La Mola<em>.</em> <span style="font-size:13px;color:var(--bone-3);letter-spacing:.02em">Horari</span> <span style="color:var(--bone-3);font-weight:400">·</span> <span style="font-size:13px;color:var(--bone-3);letter-spacing:.02em">Admin</span></div>
+    <div class="sub" style="margin-top:2px">Gestio de classes</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="counts"><b id="count-slots">0</b> franges · <b id="count-classes">0</b> classes</div>
+  <a href="https://crossfitlamola.com/horari" class="link" target="_blank">Veure web</a>
+</div>
+
+<section class="hero">
+  <h1>Gestio d'<em>horari</em></h1>
+  <div class="lede">Afegeix, edita o elimina classes de l'horari setmanal. Els canvis es desen al navegador mentre treballes, i els publiques quan estiguin llestos.</div>
+</section>
+
+<div class="toolbar">
+  <button class="btn" id="btn-download">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9M4 7l4 4 4-4M2 13h12"/></svg>
+    Descarregar JSON
+  </button>
+  <button class="btn ok" id="btn-publish">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L2 4v5c0 3 2.5 5.5 6 6.5 3.5-1 6-3.5 6-6.5V4L8 1z"/><path d="M5.5 8l2 2 3-4"/></svg>
+    Publicar a GitHub
+  </button>
+  <button class="btn ghost" id="btn-discard">Descartar canvis locals</button>
+</div>
+
+<div class="status" id="status"></div>
+
+<div class="schedule" id="schedule"></div>
+
+<div class="legend">
+  <span class="chip wod">WOD</span>
+  <span class="chip wl">Weightlifting</span>
+  <span class="chip hy">Hybrid</span>
+  <span class="chip st">Strength</span>
+  <span class="chip bw">Bodyweight</span>
+  <span class="chip ab">Abs & Cals</span>
+  <span class="chip pr">The Program</span>
+  <span class="chip rc">Running</span>
+  <span class="chip etc">Entrena amb coach</span>
+  <span class="chip open">Open Gym</span>
+</div>
+
+<div class="modal-back" id="modal-gh">
+  <div class="modal">
+    <h2>Configura <em>GitHub</em></h2>
+    <p>Per publicar automaticament, necessites un token personal de GitHub. Es guarda nomes al teu navegador, mai s'envia enlloc mes.</p>
+    <label for="gh-repo">Repositori (<code>usuari/repo</code>)</label>
+    <input type="text" id="gh-repo" placeholder="ex: jordiangladavilla-oss/lamola-tv-horari2026" spellcheck="false">
+    <label for="gh-branch">Branca</label>
+    <input type="text" id="gh-branch" placeholder="main" value="main" spellcheck="false">
+    <label for="gh-token">Personal Access Token</label>
+    <input type="password" id="gh-token" placeholder="ghp_..." spellcheck="false">
+    <div class="hint">Crea'n un a <a href="https://github.com/settings/tokens/new?scopes=repo&description=La%20Mola%20Horari" target="_blank">github.com/settings/tokens</a> amb scope <b>repo</b>.</div>
+    <details><summary>Com obtenir el token?</summary>
+      <div class="hint" style="margin-top:8px;line-height:1.6">
+        1. Obre <a href="https://github.com/settings/tokens/new?scopes=repo&description=La%20Mola%20Horari" target="_blank">aquest enllac</a><br>
+        2. A "Expiration", tria "No expiration" o la data que vulguis<br>
+        3. Verifica que <b>repo</b> esta marcat<br>
+        4. Clic a "Generate token"<br>
+        5. Copia el token i enganxa'l aqui
+      </div>
+    </details>
+    <div class="modal-actions">
+      <button class="btn ghost" id="gh-cancel">Cancel·lar</button>
+      <button class="btn primary" id="gh-save">Desar i publicar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'lamola_horari_draft';
+const GH_KEY = 'lamola_horari_gh';
+let DATA = null;
+
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+const DISC_COLORS = {
+  wod: '#17140F',
+  wl: '#B84D1E',
+  hy: '#3d5f3f',
+  st: '#8c3f2f',
+  bw: '#5a4a2f',
+  ab: '#7a4a3a',
+  pr: '#B84D1E',
+  rc: '#3a5a7a',
+  etc: '#6B6455',
+  open: '#6B6455'
+};
+
+function status(msg, kind='info'){
+  const s = $('#status');
+  s.className = 'status on ' + (kind==='ok'?'ok':kind==='err'?'err':'');
+  s.textContent = msg;
+  if(kind !== 'err') setTimeout(()=>s.className='status', 4000);
+}
+
+function saveDraft(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA));
+  updateCounts();
+}
+
+function updateCounts(){
+  let slots = 0, classes = 0;
+  DATA.days.forEach(d => {
+    slots += d.slots.length;
+    d.slots.forEach(s => {
+      classes += s.classes.filter(c => c.disc !== 'open').length;
+    });
+  });
+  $('#count-slots').textContent = slots;
+  $('#count-classes').textContent = classes;
+}
+
+async function loadData(){
+  const draft = localStorage.getItem(STORAGE_KEY);
+  if(draft){
+    try {
+      DATA = JSON.parse(draft);
+      status('Esborrany local carregat. Publica per fer-ho permanent.', 'info');
+      render();
+      return;
+    } catch {}
+  }
+  try {
+    const res = await fetch('horari.json?t=' + Date.now());
+    DATA = await res.json();
+  } catch(err){
+    DATA = { days: [], disciplines: [], openHours: {} };
+    status('No s\'ha pogut carregar horari.json.', 'err');
+  }
+  render();
+}
+
+function render(){
+  const container = $('#schedule');
+  container.innerHTML = '';
+
+  DATA.days.forEach((day, dayIdx) => {
+    const dayEl = document.createElement('div');
+    dayEl.className = 'day-row';
+    dayEl.dataset.day = dayIdx;
+
+    const coachedCount = day.slots.reduce((acc, s) => acc + s.classes.filter(c => c.disc !== 'open').length, 0);
+
+    dayEl.innerHTML = `
+      <div class="day-head">
+        <h3>${day.name}<span class="abbr">${day.abbr}</span></h3>
+        <span class="count">${day.slots.length} franges · ${coachedCount} classes</span>
+        <span class="chev">▾</span>
+      </div>
+      <div class="day-body"></div>
+    `;
+
+    dayEl.querySelector('.day-head').addEventListener('click', () => {
+      dayEl.classList.toggle('open');
+      if(dayEl.classList.contains('open') && !dayEl.dataset.rendered){
+        renderDayBody(dayEl.querySelector('.day-body'), day, dayIdx);
+        dayEl.dataset.rendered = 'true';
+      }
+    });
+
+    container.appendChild(dayEl);
+  });
+
+  updateCounts();
+}
+
+function renderDayBody(body, day, dayIdx){
+  body.innerHTML = '';
+
+  day.slots.forEach((slot, slotIdx) => {
+    body.appendChild(renderSlotCard(slot, dayIdx, slotIdx));
+  });
+
+  const addBtn = document.createElement('button');
+  addBtn.className = 'btn ghost add-slot-btn';
+  addBtn.innerHTML = '+ Afegir franja horaria';
+  addBtn.addEventListener('click', () => {
+    const newSlot = { time: '00:00-01:00', classes: [{ disc: 'wod', label: 'WOD' }] };
+    day.slots.push(newSlot);
+    saveDraft();
+    body.insertBefore(renderSlotCard(newSlot, dayIdx, day.slots.length - 1), addBtn);
+  });
+  body.appendChild(addBtn);
+}
+
+function renderSlotCard(slot, dayIdx, slotIdx){
+  const card = document.createElement('div');
+  card.className = 'slot-card';
+  card.dataset.slot = slotIdx;
+
+  const coached = slot.classes.filter(c => c.disc !== 'open');
+  const opens = slot.classes.filter(c => c.disc === 'open');
+
+  card.innerHTML = `
+    <div class="slot-head">
+      <span class="time">${slot.time}</span>
+      <div class="classes-preview"></div>
+      <div class="slot-actions">
+        <button class="edit">Editar</button>
+        <button class="del">Eliminar</button>
+      </div>
+    </div>
+    <div class="slot-body"></div>
+  `;
+
+  const preview = card.querySelector('.classes-preview');
+  coached.forEach(c => {
+    const tag = document.createElement('span');
+    tag.className = 'class-tag';
+    tag.style.background = DISC_COLORS[c.disc] || DISC_COLORS.wod;
+    tag.style.color = '#F4EEDF';
+    tag.textContent = c.label;
+    preview.appendChild(tag);
+  });
+  if(opens.length && coached.length){
+    const tag = document.createElement('span');
+    tag.className = 'class-tag open';
+    tag.style.background = 'var(--bone-3)';
+    tag.style.color = 'var(--ink)';
+    tag.textContent = '+' + opens.length + ' open';
+    preview.appendChild(tag);
+  } else if(opens.length && !coached.length){
+    opens.forEach(c => {
+      const tag = document.createElement('span');
+      tag.className = 'class-tag open';
+      tag.style.background = 'var(--bone-3)';
+      tag.style.color = 'var(--ink)';
+      tag.textContent = c.label;
+      preview.appendChild(tag);
+    });
+  }
+
+  card.querySelector('.edit').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const wasEditing = card.classList.contains('editing');
+    $$('.slot-card.editing').forEach(c => c.classList.remove('editing'));
+    if(!wasEditing){
+      card.classList.add('editing');
+      renderSlotBody(card.querySelector('.slot-body'), slot, dayIdx, slotIdx, card);
+    }
+  });
+
+  card.querySelector('.del').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if(confirm('Eliminar aquesta franja?')){
+      DATA.days[dayIdx].slots.splice(slotIdx, 1);
+      saveDraft();
+      card.remove();
+      reindexSlots(dayIdx);
+    }
+  });
+
+  return card;
+}
+
+function reindexSlots(dayIdx){
+  const dayEl = $(`.day-row[data-day="${dayIdx}"]`);
+  if(!dayEl) return;
+  dayEl.querySelectorAll('.slot-card').forEach((card, i) => {
+    card.dataset.slot = i;
+  });
+}
+
+function renderSlotBody(body, slot, dayIdx, slotIdx, card){
+  body.innerHTML = `
+    <div class="slot-form-row">
+      <label>Horari</label>
+      <input type="text" class="time-input" value="${slot.time}" placeholder="07:00-08:00">
+    </div>
+    <div class="classes-list"></div>
+    <button class="btn ghost add-class-btn">+ Afegir classe</button>
+  `;
+
+  body.querySelector('.time-input').addEventListener('input', (e) => {
+    slot.time = e.target.value;
+    card.querySelector('.time').textContent = slot.time;
+    saveDraft();
+  });
+
+  const list = body.querySelector('.classes-list');
+  slot.classes.forEach((cls, clsIdx) => {
+    list.appendChild(renderClassRow(cls, slot, clsIdx, card));
+  });
+
+  body.querySelector('.add-class-btn').addEventListener('click', () => {
+    const newClass = { disc: 'wod', label: 'WOD' };
+    slot.classes.push(newClass);
+    saveDraft();
+    list.appendChild(renderClassRow(newClass, slot, slot.classes.length - 1, card));
+    refreshPreview(card, slot);
+  });
+}
+
+function renderClassRow(cls, slot, clsIdx, card){
+  const row = document.createElement('div');
+  row.className = 'class-row';
+
+  row.innerHTML = `
+    <select class="disc-select">
+      <option value="wod" ${cls.disc==='wod'?'selected':''}>WOD</option>
+      <option value="wl" ${cls.disc==='wl'?'selected':''}>Weightlifting</option>
+      <option value="hy" ${cls.disc==='hy'?'selected':''}>Hybrid</option>
+      <option value="st" ${cls.disc==='st'?'selected':''}>Strength</option>
+      <option value="bw" ${cls.disc==='bw'?'selected':''}>Bodyweight</option>
+      <option value="ab" ${cls.disc==='ab'?'selected':''}>Abs & Cals</option>
+      <option value="pr" ${cls.disc==='pr'?'selected':''}>The Program</option>
+      <option value="rc" ${cls.disc==='rc'?'selected':''}>Running</option>
+      <option value="etc" ${cls.disc==='etc'?'selected':''}>Entrena amb coach</option>
+      <option value="open" ${cls.disc==='open'?'selected':''}>Open Gym</option>
+    </select>
+    <input type="text" class="label-input" value="${esc(cls.label)}" placeholder="Nom de la classe">
+    <button>Eliminar</button>
+  `;
+
+  row.querySelector('.disc-select').addEventListener('change', (e) => {
+    cls.disc = e.target.value;
+    saveDraft();
+    refreshPreview(card, slot);
+  });
+
+  row.querySelector('.label-input').addEventListener('input', (e) => {
+    cls.label = e.target.value;
+    saveDraft();
+    refreshPreview(card, slot);
+  });
+
+  row.querySelector('button').addEventListener('click', () => {
+    const idx = slot.classes.indexOf(cls);
+    if(idx > -1){
+      slot.classes.splice(idx, 1);
+      saveDraft();
+      row.remove();
+      refreshPreview(card, slot);
+    }
+  });
+
+  return row;
+}
+
+function refreshPreview(card, slot){
+  const preview = card.querySelector('.classes-preview');
+  preview.innerHTML = '';
+
+  const coached = slot.classes.filter(c => c.disc !== 'open');
+  const opens = slot.classes.filter(c => c.disc === 'open');
+
+  coached.forEach(c => {
+    const tag = document.createElement('span');
+    tag.className = 'class-tag';
+    tag.style.background = DISC_COLORS[c.disc] || DISC_COLORS.wod;
+    tag.style.color = '#F4EEDF';
+    tag.textContent = c.label;
+    preview.appendChild(tag);
+  });
+
+  if(opens.length && coached.length){
+    const tag = document.createElement('span');
+    tag.className = 'class-tag open';
+    tag.style.background = 'var(--bone-3)';
+    tag.style.color = 'var(--ink)';
+    tag.textContent = '+' + opens.length + ' open';
+    preview.appendChild(tag);
+  } else if(opens.length && !coached.length){
+    opens.forEach(c => {
+      const tag = document.createElement('span');
+      tag.className = 'class-tag open';
+      tag.style.background = 'var(--bone-3)';
+      tag.style.color = 'var(--ink)';
+      tag.textContent = c.label;
+      preview.appendChild(tag);
+    });
+  }
+}
+
+function esc(v){
+  if(v == null) return '';
+  return String(v).replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+$('#btn-download').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(DATA, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'horari.json';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  status('horari.json descarregat.', 'ok');
+});
+
+$('#btn-discard').addEventListener('click', () => {
+  if(confirm('Descartar tots els canvis locals i tornar a carregar des del fitxer?')){
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+});
+
+$('#btn-publish').addEventListener('click', () => {
+  const cfg = loadGhConfig();
+  $('#gh-repo').value = cfg.repo || '';
+  $('#gh-branch').value = cfg.branch || 'main';
+  $('#gh-token').value = cfg.token || '';
+  $('#modal-gh').classList.add('on');
+});
+
+$('#gh-cancel').addEventListener('click', () => $('#modal-gh').classList.remove('on'));
+$('#modal-gh').addEventListener('click', e => { if(e.target.id==='modal-gh') $('#modal-gh').classList.remove('on'); });
+
+$('#gh-save').addEventListener('click', async () => {
+  const repo = $('#gh-repo').value.trim();
+  const branch = $('#gh-branch').value.trim() || 'main';
+  const token = $('#gh-token').value.trim();
+  if(!repo || !token){ alert('Cal omplir repositori i token.'); return; }
+  if(!repo.includes('/')){ alert('El repositori ha de ser en format usuari/repo.'); return; }
+  saveGhConfig({repo, branch, token});
+  $('#modal-gh').classList.remove('on');
+  await publishToGithub({repo, branch, token});
+});
+
+function loadGhConfig(){
+  try { return JSON.parse(localStorage.getItem(GH_KEY) || '{}'); } catch { return {}; }
+}
+function saveGhConfig(cfg){
+  localStorage.setItem(GH_KEY, JSON.stringify(cfg));
+}
+
+async function publishToGithub({repo, branch, token}){
+  const content = JSON.stringify(DATA, null, 2);
+  const path = 'horari.json';
+  const apiBase = `https://api.github.com/repos/${repo}/contents/${path}`;
+
+  status('Publicant a GitHub...', 'info');
+  try {
+    let sha = null;
+    const getRes = await fetch(apiBase + '?ref=' + branch, {
+      headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if(getRes.ok){
+      const j = await getRes.json();
+      sha = j.sha;
+    } else if(getRes.status !== 404){
+      throw new Error('GitHub API: '+getRes.status+' '+getRes.statusText);
+    }
+
+    const body = {
+      message: 'Update horari.json from admin ('+new Date().toLocaleString('ca-ES')+')',
+      content: btoa(unescape(encodeURIComponent(content))),
+      branch
+    };
+    if(sha) body.sha = sha;
+
+    const putRes = await fetch(apiBase, {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if(!putRes.ok){
+      const err = await putRes.json().catch(()=>({}));
+      throw new Error('GitHub: '+(err.message || putRes.status));
+    }
+    localStorage.removeItem(STORAGE_KEY);
+    status('Publicat! Els canvis apareixeran al web en ~1 minut.', 'ok');
+  } catch(err){
+    status('Error publicant: '+err.message, 'err');
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
